@@ -836,7 +836,9 @@ static void usb_init() {
 
 static void bt_init() {
     for (int i = 0; i < CONFIG_BT_MAX_CONN; i++) {
-        bt_hogp_init(&hogps[i], &hogp_init_params);
+        for (int j = 0; j < MAX_HIDS_INSTANCES; j++) {
+            bt_hogp_init(&hogps[i][j], &hogp_init_params);
+        }
     }
 
     if (!CHK(bt_conn_auth_cb_register(&conn_auth_callbacks))) {
